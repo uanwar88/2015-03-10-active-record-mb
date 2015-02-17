@@ -10,3 +10,7 @@ require_relative 'board'
 require_relative 'user'
 require_relative 'post'
 require_relative 'thread'
+
+get '/' do
+  slim :index
+end

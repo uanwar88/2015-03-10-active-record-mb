@@ -12,5 +12,6 @@ DATABASE.execute("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, mess
                               FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
                               FOREIGN KEY(thread_id) REFERENCES threads(id) ON DELETE CASCADE)")
 
-DATABASE.execute("CREATE TABLE IF NOT EXISTS threads (id INTEGER PRIMARY KEY, title TEXT, user_id INTEGER,
-                              FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)")
+DATABASE.execute("CREATE TABLE IF NOT EXISTS threads (id INTEGER PRIMARY KEY, title TEXT, user_id INTEGER, board_id INTEGER,
+                              FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE),
+                              FOREIGN KEY(board_id) REFERENCES boards(id) ON DELETE CASCADE")

@@ -1,34 +1,40 @@
 class User
   @table_name = 'users'
-  extend Modules
+  extend MainModules
   attr_accessor :id, :username, :total_posts, :total_threads
 
   @table_name = 'users'
   extend Modules
 
+
+  # Description: Creates a new user object.
+  # Params:
+  # - options: Requires a hash with key value pairs.
+  #   - required keys/values:
+  #     - 'username': String, A username.
+  # Returns: A user object.
+
   def initialize(options)
-    @id = options['id']
+    @user_id = options['id']
     @username = options['username']
     @total_posts = options['total_posts']
     @total_threads = options['total_threads']
   end
 
-  def self.create_new(username)
-    DATABASE.execute("INSERT INTO users (username) VALUES ('#{username}')")
+  def insert
+    DATABASE.execute("INSERT INTO users (username) VALUES ('#{@username}')")
     @id = DATABASE.last_insert_row_id
   end
 
-  def self.fetch(username)
-    result = DATABASE.execute("SELECT id, username, total_posts, total_threads FROM users WHERE username = #{username}")
-    User.new(result[0])
+  def new_post(options)
+    post = Post.new('message' => options['message'] 'thread_id' => options['thread_id'], 'user_id' => @user_id)
+    post.insert
+    return post
   end
 
-  
-
-  def self.create_post
-
-  end
-
-  def self.create_thread
+  def new_thread(options)
+    thread = Thread.new('title' => options['title'], 'user_id' => @user_id)
+    thread.insert
+    return thread
   end
 end
