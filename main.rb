@@ -11,7 +11,7 @@ require_relative 'post'
 require_relative 'thread'
 require_relative 'board'
 
-#binding.pry
+binding.pry
 
 get '/' do
   @boards = Board.list_all
@@ -24,25 +24,36 @@ get '/board/:id' do
   slim :show_threads
 end
 
-get 'board/:id/new_thread' do
+get '/board/:id/new_thread' do
   @board_id = params[:id]
   slim :new_thread
 end
 
-get 'thread/:id' do
-  @thread =
-  slim :thread_posts
+get '/thread/:id' do
+  @thread = Thread.fetch(params[:id])
+  slim :show_thread
 end
 
-post 'thread/:id' do
+post '/new_thread' do
+  if params['submit'].to_i == 1
+    thread = Thread.new({'title' => params['title'], 'user_id' => 1})
+    thread.insert
+    post = Post.new({'message' => params['message'], 'thread_id' => thread.id, 'user_id' => 1})
+    post.insert
+    #insert new thread and new post into database with user_id
+    redirect to('/thread/#{post.id}')
+  end
+end
+
+post '/thread/:id' do
   #do some stuff
-  slim :thread_posts
+  slim :show_thread
 end
 
-get 'user/:id/posts' do
+get '/user/:id/posts' do
   slim :user_posts
 end
 
-get 'user/:id/threads' do
+get '/user/:id/threads' do
   slim :user_threads
 end

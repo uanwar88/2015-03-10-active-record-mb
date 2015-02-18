@@ -1,6 +1,7 @@
 class Post
   @table_name = 'posts'
-  extend MainModules, ExtraModules
+  extend MainModules
+  extend ExtraModules
   attr_accessor :message, :thread_id, :user_id, :id
 
   def initialize(options)

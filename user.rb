@@ -14,7 +14,7 @@ class User
   # Returns: A user object.
 
   def initialize(options)
-    @user_id = options['id']
+    @id = options['id']
     @username = options['username']
     @total_posts = options['total_posts']
     @total_threads = options['total_threads']
@@ -22,18 +22,18 @@ class User
 
   def insert
     DATABASE.execute("INSERT INTO users (username) VALUES ('#{@username}')")
-    @user_id = DATABASE.last_insert_row_id
+    @id = DATABASE.last_insert_row_id
     self
   end
 
   def new_post(options)
-    post = Post.new('message' => options['message'], 'thread_id' => options['thread_id'], 'user_id' => @user_id)
+    post = Post.new('message' => options['message'], 'thread_id' => options['thread_id'], 'user_id' => @id)
     post.insert
     return post
   end
 
   def new_thread(options)
-    thread = Thread.new('title' => options['title'], 'user_id' => @user_id)
+    thread = Thread.new('title' => options['title'], 'user_id' => @id)
     thread.insert
     return thread
   end

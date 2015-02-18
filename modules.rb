@@ -7,7 +7,7 @@ module MainModules
     DATABASE.execute("SELECT * FROM #{@table_name}")
   end
 
-  def self.fetch(input)
+  def fetch(input)
     if input.is_a?(Integer)
       result = DATABASE.execute("SELECT * FROM #{@table_name} WHERE id = #{input}")
       self.new(result[0])

@@ -1,16 +1,10 @@
-a href="#{@board_id}/new_thread" class="no_decoration"
-  div class='btn'
-    | New thread
-  br
-  br
-
-div class="css_table"
+div class="posts_table"
   table
     tr
       td Thread title
       td Total replies
       td Last reply
-    - @threads.each do |x|
+    - @posts.each do |x|
       tr
         td
           a href="/thread/#{x['id']}" #{x['title']}

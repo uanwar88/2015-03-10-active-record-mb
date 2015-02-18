@@ -1,0 +1,13 @@
+div class = "new_thread"
+  h2 Post new thread
+  div class="form"
+    form action="/new_thread?submit=1" method="post"
+      h3 Thread title:
+      input type="text" size="100" maxlength="100" name="title"
+      br
+      br
+      h3 Message:
+      textarea name="message" cols="72" rows="25"
+      br
+      br
+      input type="submit" class='btn' style="margin-left: 0px; margin-top: 0px;"

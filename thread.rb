@@ -1,6 +1,7 @@
 class Thread
   @table_name = 'threads'
-  extend MainModules, ExtraModules
+  extend MainModules
+  extend ExtraModules
   attr_accessor :id, :title, :user_id
 
   def initialize(options)
@@ -10,6 +11,7 @@ class Thread
 
   def insert
     DATABASE.execute("INSERT INTO threads (title, user_id) VALUES ('#{@title}', #{@user_id})")
+    @id = DATABASE.last_insert_row_id
   end
 
   def edit(options)
