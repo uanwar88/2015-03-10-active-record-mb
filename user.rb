@@ -1,10 +1,9 @@
 class User
   @table_name = 'users'
-  extend MainModules
+  extend MainModules, ExtraModules
   attr_accessor :id, :username, :total_posts, :total_threads
 
   @table_name = 'users'
-  extend Modules
 
 
   # Description: Creates a new user object.
@@ -23,11 +22,12 @@ class User
 
   def insert
     DATABASE.execute("INSERT INTO users (username) VALUES ('#{@username}')")
-    @id = DATABASE.last_insert_row_id
+    @user_id = DATABASE.last_insert_row_id
+    self
   end
 
   def new_post(options)
-    post = Post.new('message' => options['message'] 'thread_id' => options['thread_id'], 'user_id' => @user_id)
+    post = Post.new('message' => options['message'], 'thread_id' => options['thread_id'], 'user_id' => @user_id)
     post.insert
     return post
   end

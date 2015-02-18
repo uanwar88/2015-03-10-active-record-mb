@@ -20,7 +20,7 @@ class Thread
     DATABASE.execute("UPDATE threads SET title = '#{@title}' WHERE id = #{@id}")
   end
 
-  def list_board(id)
+  def self.list_all_board(id)
     DATABASE.execute("SELECT * FROM threads WHERE board_id = #{id}")
   end
 end

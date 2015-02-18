@@ -1,0 +1,12 @@
+div class="css_table"
+  table
+    tr
+      td Thread title
+      td Total replies
+      td Last reply
+    - @threads.each do |x|
+      tr
+        td
+          a href="/thread/#{x['id']}" #{x['title']}
+        td #{x['total_threads']}
+        td #{x['total_posts']}

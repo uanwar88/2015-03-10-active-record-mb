@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    link type="text/css" href="style.css" rel="stylesheet"
+    link type="text/css" href="tables.css" rel="stylesheet"
+    link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'
+
+    title Welcome to Message Board
+  body
+    div class = "container"
+      div class="header"
+        a href="/"
+          h2 Message Board v. 10.0
+      div class='main_content'
+        == yield
+    div class='footer'

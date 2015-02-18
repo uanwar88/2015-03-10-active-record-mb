@@ -1,4 +1,4 @@
-class MainModules
+module MainModules
   def delete(id)
     DATABASE.execute("DELETE FROM #{@table_name} WHERE id = #{id}")
   end
@@ -18,7 +18,7 @@ class MainModules
   end
 end
 
-class ExtraModules
+module ExtraModules
   def fetch_by_user(user_id)
     result = DATABASE.execute("SELECT * FROM #{@table_name} WHERE user_id = #{user_id}")
     return result[0]
