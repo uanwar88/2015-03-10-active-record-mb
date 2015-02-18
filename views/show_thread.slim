@@ -4,7 +4,10 @@ div class="posts_table"
     - @posts.each do |x|
       tr
         td
-          | Posted by user: #{x.user_id}
+          - user = User.fetch(x.user_id)
+          span style="color: #0f2c6a"
+            h2 #{user.username}
+            | Total posts: #{user.total_posts}
         td
           == x.message
 br

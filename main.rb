@@ -13,7 +13,12 @@ require_relative 'board'
 
 binding.pry
 
+enable :sessions
+
 get '/' do
+  if session[:user]
+    @message = "Welcome, #{session[:user].username}!"
+  end
   @boards = Board.list_all
   slim :boards
 end
@@ -40,11 +45,40 @@ post '/new_thread' do
     @message = params['message'].gsub(/\n/, '<br />')
     thread = MBThread.new({'title' => params['title'], 'user_id' => 1, 'board_id' => params['board_id']})
     thread.insert
-    post = Post.new({'message' => @message, 'thread_id' => thread.id, 'user_id' => 1})
+    post = Post.new({'message' => @message, 'thread_id' => thread.id, 'user_id' => session['user_id']})
     post.insert
     #insert new thread and new post into database with user_id
   end
   redirect to("/thread/#{thread.id}")
+end
+
+get '/login' do
+  slim :login
+end
+
+get '/logout' do
+  session.clear
+  redirect to ('/')
+end
+
+post '/login' do
+  user = User.fetch(params['username'].downcase)
+  if user == nil
+    @message = "Username not found! Please enter a valid username or make a new user."
+    slim :error
+  end
+  session[:user] = user
+  redirect to ('/')
+end
+
+get '/new_account' do
+  slim :make_account
+end
+
+post '/new_account' do
+  new_user = User.new({'username' => params['username']})
+  new_user = new_user.insert
+  session[:user] = new_user
 end
 
 get '/reply' do

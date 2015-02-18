@@ -15,7 +15,7 @@ class User
 
   def initialize(options)
     @id = options['id']
-    @username = options['username']
+    @username = options['username'].downcase
     @total_posts = options['total_posts']
     @total_threads = options['total_threads']
   end
@@ -29,6 +29,7 @@ class User
   def new_post(options)
     post = Post.new('message' => options['message'], 'thread_id' => options['thread_id'], 'user_id' => @id)
     post.insert
+    DATABASE.execute("UPDATE users SET total_posts = total_posts + 1 WHERE user_id = #{@id}")
     return post
   end
 
