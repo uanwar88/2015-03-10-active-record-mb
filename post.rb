@@ -23,8 +23,12 @@ class Post
     DATABASE.execute("UPDATE posts SET message = '#{@message}' WHERE id = #{@id}")
   end
 
-  def self.fetch_by_thread(thread_id)
-    result = DATABASE.execute("SELECT * FROM posts WHERE thread_id = #{thread_id}")
-    Post.new(result[0])
+  def self.fetch_by_thread(id)
+    result = DATABASE.execute("SELECT * FROM posts WHERE thread_id = #{id}")
+    posts = []
+    result.each do |x|
+      posts << Post.new(x)
+    end
+    return posts
   end
 end

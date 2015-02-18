@@ -20,7 +20,7 @@ end
 
 get '/board/:id' do
   @board_id = params[:id]
-  @threads = Thread.list_all_board(@board_id)
+  @threads = MBThread.list_all_board(@board_id)
   slim :show_threads
 end
 
@@ -30,19 +30,20 @@ get '/board/:id/new_thread' do
 end
 
 get '/thread/:id' do
-  @thread = Thread.fetch(params[:id])
+  @thread = MBThread.fetch(params[:id].to_i)
+  @posts = Post.fetch_by_thread(params[:id].to_i)
   slim :show_thread
 end
 
 post '/new_thread' do
   if params['submit'].to_i == 1
-    thread = Thread.new({'title' => params['title'], 'user_id' => 1})
+    thread = MBThread.new({'title' => params['title'], 'user_id' => 1, 'board_id' => params['board_id']})
     thread.insert
     post = Post.new({'message' => params['message'], 'thread_id' => thread.id, 'user_id' => 1})
     post.insert
     #insert new thread and new post into database with user_id
-    redirect to('/thread/#{post.id}')
   end
+  redirect to("/thread/#{thread.id}")
 end
 
 post '/thread/:id' do

@@ -1,16 +1,18 @@
-class Thread
+class MBThread
   @table_name = 'threads'
-  extend MainModules
-  extend ExtraModules
-  attr_accessor :id, :title, :user_id
+  extend MainModules, ExtraModules
+  attr_accessor :title, :user_id, :board_id
+  attr_accessor :id
 
   def initialize(options)
+    @id = options['id']
     @title = options['title']
     @user_id = options['user_id']
+    @board_id = options['board_id']
   end
 
   def insert
-    DATABASE.execute("INSERT INTO threads (title, user_id) VALUES ('#{@title}', #{@user_id})")
+    DATABASE.execute("INSERT INTO threads (title, user_id,board_id) VALUES ('#{@title}', #{@user_id}, #{@board_id})")
     @id = DATABASE.last_insert_row_id
   end
 

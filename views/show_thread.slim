@@ -1,12 +1,9 @@
+h1 #{@thread.title}
 div class="posts_table"
   table
-    tr
-      td Thread title
-      td Total replies
-      td Last reply
     - @posts.each do |x|
       tr
         td
-          a href="/thread/#{x['id']}" #{x['title']}
-        td #{x['total_threads']}
-        td #{x['total_posts']}
+          | #{x.message}
+          br
+          | Posted by user: #{x.user_id}

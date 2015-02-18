@@ -29,7 +29,9 @@ body {
   background-color: #7ED0D6;
   border-bottom: 75px solid #4CC0CB
 }
-.main_content{
+.main_content h1 {
+  font-family: 'Lato';
+  color: #4E9689;
 }
 .row {
   background-color: #C3FF68;
