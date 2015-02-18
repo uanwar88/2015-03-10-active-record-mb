@@ -37,17 +37,30 @@ end
 
 post '/new_thread' do
   if params['submit'].to_i == 1
+    @message = params['message'].gsub(/\n/, '<br />')
     thread = MBThread.new({'title' => params['title'], 'user_id' => 1, 'board_id' => params['board_id']})
     thread.insert
-    post = Post.new({'message' => params['message'], 'thread_id' => thread.id, 'user_id' => 1})
+    post = Post.new({'message' => @message, 'thread_id' => thread.id, 'user_id' => 1})
     post.insert
     #insert new thread and new post into database with user_id
   end
   redirect to("/thread/#{thread.id}")
 end
 
+get '/reply' do
+  @thread_id = params['thread_id']
+  slim :post_reply
+end
+
+post '/reply' do
+  @thread_id = params['thread_id']
+  post = Post.new('message' => params['message'], 'thread_id' => @thread_id, 'user_id' => 1)
+  post.insert
+  redirect to("/thread/#{@thread_id}")
+end
+
 post '/thread/:id' do
-  #do some stuff
+  @thread_id = params[:id]
   slim :show_thread
 end
 

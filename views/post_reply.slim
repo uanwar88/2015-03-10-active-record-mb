@@ -1,0 +1,10 @@
+div class = "new_thread"
+  h2 Post reply
+  div class="form"
+    form action="/reply?submit=1" method="post"
+      h3 Message:
+      textarea name="message" cols="72" rows="25"
+      br
+      br
+      input type='hidden' value='#{@thread_id}' name="thread_id"
+      input type="submit" class='btn' style="margin-left: 0px; margin-top: 0px;"

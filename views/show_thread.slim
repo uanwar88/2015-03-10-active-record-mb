@@ -4,6 +4,11 @@ div class="posts_table"
     - @posts.each do |x|
       tr
         td
-          | #{x.message}
-          br
           | Posted by user: #{x.user_id}
+        td
+          == x.message
+br
+br
+a href='/reply?thread_id=#{@thread.id}' class="no_decoration"
+  div class='btn'
+    | Reply
