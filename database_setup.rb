@@ -5,8 +5,8 @@ DATABASE.results_as_hash = true
 DATABASE.execute("CREATE TABLE IF NOT EXISTS boards (id INTEGER PRIMARY KEY, title TEXT UNIQUE, thread_count INTEGER, post_count INTEGER,
                               description TEXT)")
 
-DATABASE.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE, total_posts INTEGER,
-                              total_threads INTEGER)")
+DATABASE.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE, total_posts INTEGER DEFAULT 0,
+                              total_threads INTEGER DEFAULT 0)")
 
 DATABASE.execute("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, message TEXT, thread_id INTEGER, user_id INTEGER,
                               FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,

@@ -13,14 +13,15 @@ module MainModules
       self.new(result[0])
     else
       result = DATABASE.execute("SELECT * FROM users WHERE username = '#{input}'")
-      User.new(result[0])
+      if result[0]
+        User.new(result[0])
+      end
     end
   end
 end
 
 module ExtraModules
   def fetch_by_user(user_id)
-    result = DATABASE.execute("SELECT * FROM #{@table_name} WHERE user_id = #{user_id}")
-    return result[0]
+    DATABASE.execute("SELECT * FROM #{@table_name} WHERE user_id = #{user_id}")
   end
 end

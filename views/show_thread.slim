@@ -12,6 +12,8 @@ div class="posts_table"
           == x.message
 br
 br
-a href='/reply?thread_id=#{@thread.id}' class="no_decoration"
-  div class='btn'
-    | Reply
+
+- if session[:user]
+  a href='/reply?thread_id=#{@thread.id}' class="no_decoration"
+    div class='btn'
+      | Reply

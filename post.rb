@@ -12,6 +12,7 @@ class Post
 
   def insert
     DATABASE.execute("INSERT INTO posts (message, thread_id, user_id) VALUES ('#{@message}',#{@thread_id}, #{@user_id})")
+    DATABASE.execute("UPDATE users SET total_posts = total_posts + 1 WHERE id = #{@user_id}")
     @id = DATABASE.last_insert_row_id
   end
 

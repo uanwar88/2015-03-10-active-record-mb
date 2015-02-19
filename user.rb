@@ -27,14 +27,13 @@ class User
   end
 
   def new_post(options)
-    post = Post.new('message' => options['message'], 'thread_id' => options['thread_id'], 'user_id' => @id)
+    post = Post.new({'message' => options['message'], 'thread_id' => options['thread_id'], 'user_id' => @id})
     post.insert
-    DATABASE.execute("UPDATE users SET total_posts = total_posts + 1 WHERE user_id = #{@id}")
     return post
   end
 
   def new_thread(options)
-    thread = Thread.new('title' => options['title'], 'user_id' => @id)
+    thread = MBThread.new({'title' => options['title'], 'user_id' => @id, 'board_id' => options['board_id']})
     thread.insert
     return thread
   end

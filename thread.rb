@@ -14,6 +14,7 @@ class MBThread
 
   def insert
     DATABASE.execute("INSERT INTO threads (title, user_id,board_id) VALUES ('#{@title}', #{@user_id}, #{@board_id})")
+    DATABASE.execute("UPDATE users SET total_threads = total_threads + 1 WHERE id = #{@user_id}")
     @id = DATABASE.last_insert_row_id
   end
 

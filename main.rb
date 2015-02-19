@@ -43,11 +43,12 @@ end
 post '/new_thread' do
   if params['submit'].to_i == 1
     @message = params['message'].gsub(/\n/, '<br />')
-    thread = MBThread.new({'title' => params['title'], 'user_id' => 1, 'board_id' => params['board_id']})
-    thread.insert
-    post = Post.new({'message' => @message, 'thread_id' => thread.id, 'user_id' => session['user_id']})
-    post.insert
-    #insert new thread and new post into database with user_id
+    thread = session[:user].new_thread({'title' => params['title'], 'user_id' => session[:user].id, 'board_id' => params['board_id']})
+    # thread = MBThread.new({'title' => params['title'], 'user_id' => session[:user].id, 'board_id' => params['board_id']})
+    # thread.insert
+    post = session[:user].new_post({'message' => @message, 'thread_id' => thread.id, 'user_id' => session[:user].id})
+    # post = Post.new({'message' => @message, 'thread_id' => thread.id, 'user_id' => session[:user].id})
+    # post.insert
   end
   redirect to("/thread/#{thread.id}")
 end
@@ -63,22 +64,13 @@ end
 
 post '/login' do
   user = User.fetch(params['username'].downcase)
-  if user == nil
+  if !user
     @message = "Username not found! Please enter a valid username or make a new user."
     slim :error
+  else
+    session[:user] = user
+    redirect to ('/')
   end
-  session[:user] = user
-  redirect to ('/')
-end
-
-get '/new_account' do
-  slim :make_account
-end
-
-post '/new_account' do
-  new_user = User.new({'username' => params['username']})
-  new_user = new_user.insert
-  session[:user] = new_user
 end
 
 get '/reply' do
@@ -86,9 +78,20 @@ get '/reply' do
   slim :post_reply
 end
 
+get '/new_account' do
+  slim :new_account
+end
+
+post '/new_account' do
+  user = User.new({'username' => params['username']})
+  user.insert
+  session[:user] = user
+  redirect to('/')
+end
+
 post '/reply' do
   @thread_id = params['thread_id']
-  post = Post.new('message' => params['message'], 'thread_id' => @thread_id, 'user_id' => 1)
+  post = Post.new('message' => params['message'], 'thread_id' => @thread_id, 'user_id' => session[:user].id)
   post.insert
   redirect to("/thread/#{@thread_id}")
 end
@@ -98,10 +101,7 @@ post '/thread/:id' do
   slim :show_thread
 end
 
-get '/user/:id/posts' do
-  slim :user_posts
-end
-
-get '/user/:id/threads' do
-  slim :user_threads
+get '/user/:id' do
+  @threads = MBThread.fetch_by_user(params[:id])
+  slim :show_user_threads
 end
