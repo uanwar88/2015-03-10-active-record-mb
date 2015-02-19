@@ -1,16 +1,16 @@
 - if !session[:user]
-  a href="/login" class="no_decoration"
-    div class='btn' style="border: solid 1px #4E9689; color: #4E9689; background-color: #6cf2a4;"
+  div class='btn' style="border: solid 1px #4E9689; color: #4E9689; background-color: #6cf2a4;"
+    a href="/login" class="no_decoration" style="color: #4E9689;"
       | Log in
-    br
-    br
+  br
+  br
 - if session[:user]
-  a href="/logout" class="no_decoration"
-    div class='btn' style="border: solid 1px #4E9689; color: #4E9689; background-color: #6cf2a4;"
+  div class='btn' style="border: solid 1px #4E9689; color: #4E9689; background-color: #6cf2a4;"
+    a href="/logout" class="no_decoration" style="color: #4E9689"
       | Log out
-    br
-    br
-    
+  br
+  br
+
 - if @message
   h3
     | #{@message}

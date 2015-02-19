@@ -1,4 +1,9 @@
 h1 #{@thread.title}
+div style="font-family: 'Lato';color: #4E9689; margin-left: 15px; margin-bottom: 25px;"
+  p
+    strong
+      | Current participants: 
+    | #{@users}
 div class="posts_table"
   table
     - @posts.each do |x|

@@ -2,8 +2,8 @@ DATABASE = SQLite3::Database.new("main.db")
 
 DATABASE.results_as_hash = true
 
-DATABASE.execute("CREATE TABLE IF NOT EXISTS boards (id INTEGER PRIMARY KEY, title TEXT UNIQUE, thread_count INTEGER, post_count INTEGER,
-                              description TEXT)")
+DATABASE.execute("CREATE TABLE IF NOT EXISTS boards (id INTEGER PRIMARY KEY, title TEXT UNIQUE, thread_count INTEGER DEFAULT 0,
+  post_count INTEGER DEFAULT 0, description TEXT)")
 
 DATABASE.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE, total_posts INTEGER DEFAULT 0,
                               total_threads INTEGER DEFAULT 0)")

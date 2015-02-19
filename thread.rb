@@ -29,4 +29,9 @@ class MBThread
   def self.list_all_board(id)
     DATABASE.execute("SELECT * FROM threads WHERE board_id = #{id}")
   end
+
+  def self.users_in_thread(id)
+    DATABASE.execute("SELECT DISTINCT posts.thread_id, posts.user_id, users.username FROM posts JOIN users on users.id = posts.user_id
+    WHERE thread_id = #{id}")
+  end
 end

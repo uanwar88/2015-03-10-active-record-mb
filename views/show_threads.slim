@@ -19,4 +19,4 @@ div class="css_table"
         td #{x['replies']}
         - user = User.fetch(x['user_id'])
         td
-          a href="/user?id=#{user.id}" #{user.username}
+          a href="/user/#{user.id}" #{user.username}

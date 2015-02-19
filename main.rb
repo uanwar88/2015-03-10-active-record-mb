@@ -37,6 +37,12 @@ end
 get '/thread/:id' do
   @thread = MBThread.fetch(params[:id].to_i)
   @posts = Post.fetch_by_thread(params[:id].to_i)
+  @users_hash = MBThread.users_in_thread(params[:id])
+  @posters = []
+  @users_hash.each do |x|
+    @posters << x['username']
+  end
+  @users = @posters.join(", ")
   slim :show_thread
 end
 
@@ -98,6 +104,7 @@ end
 
 post '/thread/:id' do
   @thread_id = params[:id]
+  @users = MBThread.users_in_thread(params[:id])
   slim :show_thread
 end
 

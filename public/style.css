@@ -19,6 +19,10 @@ body {
   color: #4E9689;
   text-decoration: none;
 }
+.blue_lato {
+  font-family: 'Lato', sans-serif;
+  color: #4E9689;
+}
 p a {
   color: #4E9689;
   text-decoration: none;
