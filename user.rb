@@ -14,10 +14,13 @@ class User
   # Returns: A user object.
 
   def initialize(options)
-    @id = options['id']
-    @username = options['username'].downcase
-    @total_posts = options['total_posts']
-    @total_threads = options['total_threads']
+    options ||= {}
+    if options['username']
+      @id = options['id']
+      @username = options['username'].downcase
+      @total_posts = options['total_posts']
+      @total_threads = options['total_threads']
+    end
   end
 
   # Description: Inserts a user object into the database.
