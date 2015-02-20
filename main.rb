@@ -24,9 +24,13 @@ require_relative 'board'
 enable :sessions
 
 helpers do
-  def join_usernames(hash)
+  # Description: Joins an array of users hashes containing usernames into a string separated by commas.
+  # Params:
+  # + array: An array containing multiple hashes with usernames.
+  # Returns: A string of usernames separated by commas.
+  def join_usernames(array)
     users = []
-    hash.each do |x|
+    array.each do |x|
       users << x['username']
     end
     return users.join(", ")
@@ -55,9 +59,9 @@ end
 get '/thread/:id' do
   @thread = MBThread.fetch(params[:id].to_i)
   @posts = Post.fetch_by_thread(params[:id].to_i)
-  @users_hash = MBThread.users_in_thread(params[:id])
+  @users_array = MBThread.users_in_thread(params[:id])
   #join_users(@users_hash)
-  @users = join_usernames(@users_hash)
+  @users = join_usernames(@users_array)
   slim :show_thread
 end
 
