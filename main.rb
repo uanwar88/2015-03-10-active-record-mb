@@ -4,6 +4,14 @@ require 'slim'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
+require 'twilio-ruby'
+account_sid = "AC2d2b44119ebbcdcea7674e8dd465be0a"
+auth_token = "acebb087eb5df1bb7c7676276bfec8c1"
+
+# @message = @client.account.messages.create({:to => "+12316851234",
+#                                    :from => "+15555555555",
+#                                    :body => "Hello there!"})
+
 require_relative 'database_setup'
 require_relative 'modules'
 require_relative 'user'
@@ -11,9 +19,19 @@ require_relative 'post'
 require_relative 'thread'
 require_relative 'board'
 
-binding.pry
+#binding.pry
 
 enable :sessions
+
+helpers do
+  def join_usernames(hash)
+    users = []
+    hash.each do |x|
+      users << x['username']
+    end
+    return users.join(", ")
+  end
+end
 
 get '/' do
   if session[:user]
@@ -38,11 +56,8 @@ get '/thread/:id' do
   @thread = MBThread.fetch(params[:id].to_i)
   @posts = Post.fetch_by_thread(params[:id].to_i)
   @users_hash = MBThread.users_in_thread(params[:id])
-  @posters = []
-  @users_hash.each do |x|
-    @posters << x['username']
-  end
-  @users = @posters.join(", ")
+  #join_users(@users_hash)
+  @users = join_usernames(@users_hash)
   slim :show_thread
 end
 
@@ -50,11 +65,7 @@ post '/new_thread' do
   if params['submit'].to_i == 1
     @message = params['message'].gsub(/\n/, '<br />')
     thread = session[:user].new_thread({'title' => params['title'], 'user_id' => session[:user].id, 'board_id' => params['board_id']})
-    # thread = MBThread.new({'title' => params['title'], 'user_id' => session[:user].id, 'board_id' => params['board_id']})
-    # thread.insert
     post = session[:user].new_post({'message' => @message, 'thread_id' => thread.id, 'user_id' => session[:user].id})
-    # post = Post.new({'message' => @message, 'thread_id' => thread.id, 'user_id' => session[:user].id})
-    # post.insert
   end
   redirect to("/thread/#{thread.id}")
 end
@@ -96,9 +107,15 @@ post '/new_account' do
 end
 
 post '/reply' do
-  @thread_id = params['thread_id']
+  @thread_id = params['thread_id'].to_i
+  thread = MBThread.fetch(@thread_id)
   post = Post.new('message' => params['message'], 'thread_id' => @thread_id, 'user_id' => session[:user].id)
   post.insert
+  #send text message when replying.
+  @client = Twilio::REST::Client.new account_sid, auth_token
+  @message = @client.account.messages.create({:to => "+17122126176",
+                                   :from => "+17125878132",
+                                   :body => "New Reply by #{session[:user].username} - #{thread.title} - #{params['message']}"})
   redirect to("/thread/#{@thread_id}")
 end
 
