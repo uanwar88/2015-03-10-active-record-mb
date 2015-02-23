@@ -8,7 +8,6 @@ class MBThread
     @id = options['id']
     @title = options['title']
     @user_id = options['user_id']
-    @replies = options['replies']
     @board_id = options['board_id']
   end
 
