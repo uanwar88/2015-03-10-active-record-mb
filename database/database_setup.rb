@@ -1,4 +1,4 @@
-DATABASE = SQLite3::Database.new("main.db")
+DATABASE = SQLite3::Database.new("/Users/usman/Code/2015-02-16-message-board/database/main.db")
 
 DATABASE.results_as_hash = true
 
