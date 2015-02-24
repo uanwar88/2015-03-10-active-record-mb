@@ -27,7 +27,7 @@ post '/reply' do
   post = Post.new('message' => params['message'], 'thread_id' => @thread_id, 'user_id' => session[:user].id)
   post.insert
   #send text message when replying.
-  send_text_message
+  send_text_message(session[:user].username,thread.title,params['message'])
 end
 
 post '/thread/:id' do
