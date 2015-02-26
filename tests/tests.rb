@@ -17,6 +17,6 @@ class TestModules < Minitest::Test
   end
 
   def test
-    
+
   end
 end

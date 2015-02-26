@@ -22,11 +22,12 @@ get '/reply' do
 end
 
 post '/reply' do
+  #insert post into database by thread_id
   @thread_id = params['thread_id'].to_i
   thread = MBThread.fetch(@thread_id)
   post = Post.new('message' => params['message'], 'thread_id' => @thread_id, 'user_id' => session[:user].id)
   post.insert
-  #send text message when replying.
+  #send text message when replying
   send_text_message(session[:user].username,thread.title,params['message'])
 end
 

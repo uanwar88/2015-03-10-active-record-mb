@@ -10,13 +10,11 @@ div class="css_table"
   table
     tr
       td Thread title
-      td Total replies
       td Posted by
     - @threads.each do |x|
       tr
         td
           a href="/thread/#{x['id']}" #{x['title']}
-        td #{x['replies']}
         - user = User.fetch(x['user_id'])
         td
           a href="/user?id=#{user.id}" #{user.username}

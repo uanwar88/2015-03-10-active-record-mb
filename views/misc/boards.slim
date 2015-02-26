@@ -19,13 +19,7 @@ div class="css_table"
   table
     tr
       td Board title
-      td Total threads
-      td Total posts
-      td Last post
     - @boards.each do |x|
       tr
         td
           a href="/board/#{x['id']}" #{x['title']}
-        td #{x['total_threads']}
-        td #{x['total_posts']}
-        td None
