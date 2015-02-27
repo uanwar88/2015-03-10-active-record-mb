@@ -25,12 +25,12 @@
   height:100%;
   margin:0px;padding:0px;
 }
-.posts_table tr td {
-  height: 150px;
-}
+
 .posts_table tr td:first-child {
-  height: 150px;
   width: 25%;
+}
+.posts_table tr td {
+  vertical-align: top;
 }
 .posts_table tr:last-child td:last-child {
   -moz-border-radius-bottomright:10px;

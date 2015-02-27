@@ -6,6 +6,7 @@ class Post
   attr_reader :thread_id, :user_id, :id
 
   def initialize(options)
+    @id = options['id']
     @message = options['message']
     @thread_id = options['thread_id']
     @user_id = options['user_id']

@@ -14,6 +14,9 @@ post '/login' do
     slim :"misc/error"
   else
     session[:user] = user
+    if session[:user].username[0,5] == "admin"
+      session[:admin] = 1
+    end
     redirect to ('/')
   end
 end

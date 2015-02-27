@@ -1,14 +1,13 @@
 div class = "new_thread" style="max-width:575px;"
-  h2 Post new thread
+  h2 Create new board
   div class="form"
-    form action="/new_thread?submit=1" method="post"
-      h3 Thread title:
+    form action="/new_board" method="post"
+      h3 Title:
       input type="text" maxlength="100" name="title" style="width: 95%;"
       br
       br
-      h3 Message:
-      textarea name="message" rows="25" style="width: 95%;"
+      h3 Description:
+      input type="text" maxlength="100" name="description" style="width: 95%;"
       br
       br
-      input type='hidden' value='#{@board_id}' name="board_id"
       input type="submit" class='btn' style="margin-left: 0px; margin-top: 0px;"

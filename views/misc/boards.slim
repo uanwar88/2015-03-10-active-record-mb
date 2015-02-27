@@ -11,9 +11,12 @@
   br
   br
 
-- if @message
+- if session[:user]
   h3
-    | #{@message}
+    | Welcome, #{session[:user].username}!
+- if session[:admin] == 1
+  h4
+    | Logged in as administrator.
 
 div class="css_table"
   table
@@ -23,3 +26,8 @@ div class="css_table"
       tr
         td
           a href="/board/#{x['id']}" #{x['title']}
+    - if session[:admin] == 1
+      tr
+        td
+          a href="/new_board" style="color: #e03434"
+            | Create new board

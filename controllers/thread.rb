@@ -41,3 +41,25 @@ get '/user/:id' do
   @threads = MBThread.fetch_by_user(params[:id])
   slim :"threads/show_user_threads"
 end
+
+get '/edit/post/:id' do
+  @post = Post.fetch(params[:id].to_i)
+  if @post.user_id == session[:user].id || session[:admin] == 1
+    slim :"threads/edit_post"
+  else
+    @message = "You can't edit this post."
+    slim :"misc/error"
+  end
+end
+
+post '/edit/post/:id' do
+  post = Post.fetch(params[:id].to_i)
+  if post.user_id == session[:user].id || session[:admin] == 1
+    post.message = params['message'].gsub(/\n/, '<br />')
+    post.save_edits
+    redirect to("/thread/#{post.thread_id}")
+  else
+    @message = "You can't edit this post."
+    slim :"misc/error"
+  end
+end

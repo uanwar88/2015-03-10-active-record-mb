@@ -2,7 +2,7 @@ h1 #{@thread.title}
 div style="font-family: 'Lato';color: #4E9689; margin-left: 15px; margin-bottom: 25px;"
   p
     strong
-      | Current participants: 
+      | Current participants:
     | #{@users}
 div class="posts_table"
   table
@@ -15,6 +15,11 @@ div class="posts_table"
             | Total posts: #{user.total_posts}
         td
           == x.message
+          - if session[:user] && session[:user].username == user.username || session[:admin] == 1
+            div style="float:right; margin-top: 100px;"
+              a href="/edit/post/#{x.id}" style="color: #e03434"
+                | Edit
+
 br
 br
 
