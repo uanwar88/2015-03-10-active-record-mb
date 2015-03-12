@@ -1,6 +1,6 @@
 get '/board/:id' do
   @board_id = params[:id]
-  @threads = MBThread.list_all_board(@board_id)
+  @threads = MbThread.where("board_id = ?", "#{@board_id}")
   slim :"threads/show_threads"
 end
 
@@ -14,7 +14,6 @@ get '/new_board' do
 end
 
 post '/new_board' do
-  board = Board.new({'title' => params['title'], 'description' => params['description']})
-  board.insert
+  Board.create(title: params['title'], description: params['description'])
   redirect to('/')
 end

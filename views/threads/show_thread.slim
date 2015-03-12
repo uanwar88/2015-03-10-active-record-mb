@@ -9,14 +9,17 @@ div class="posts_table"
     - @posts.each do |x|
       tr
         td
-          - user = User.fetch(x.user_id)
           span style="color: #0f2c6a"
-            h2 #{user.username}
-            | Total posts: #{user.total_posts}
+            h2 #{x.username}
+            | Total posts: #{x.total_posts}
         td
           == x.message
-          - if session[:user] && session[:user].username == user.username || session[:admin] == 1
-            div style="float:right; margin-top: 100px;"
+          - if session[:admin] == 1
+            div style="float:right; text-align: right;"
+              a href="/delete/post/#{x.id}" style="color: #e03434"
+                | X
+          - if session[:user] && session[:user].username == x.username || session[:admin] == 1
+            div style="position: relative; float:right; margin-top: 100px; right: -5px;"
               a href="/edit/post/#{x.id}" style="color: #e03434"
                 | Edit
 

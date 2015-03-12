@@ -6,9 +6,9 @@ helpers do
   def join_usernames(array)
     users = []
     array.each do |x|
-      users << x['username']
+      users << x.username
     end
-    return users.join(", ")
+    return users.uniq.join(", ")
   end
 
   def send_text_message(username,thread_title,message)
@@ -18,6 +18,5 @@ helpers do
     @message = @client.account.messages.create({:to => "+17122126176",
                                      :from => "+17125878132",
                                      :body => "New Reply by #{username} - #{thread_title} - #{message}"})
-    redirect to("/thread/#{@thread_id}")
   end
 end

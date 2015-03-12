@@ -1,4 +1,4 @@
 get '/' do
-  @boards = Board.list_all
+  @boards = Board.all
   slim :"misc/boards"
 end
