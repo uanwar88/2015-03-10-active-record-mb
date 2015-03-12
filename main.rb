@@ -7,13 +7,6 @@ require 'sinatra/activerecord'
 require 'bcrypt'
 require 'twilio-ruby'
 
-password = BCrypt::Password.create("hello")
-puts password
-
-# @message = @client.account.messages.create({:to => "+12316851234",
-#                                    :from => "+15555555555",
-#                                    :body => "Hello there!"})
-
 require_relative 'database/database_setup'
 # require_relative 'models/modules'
 require_relative 'models/user'

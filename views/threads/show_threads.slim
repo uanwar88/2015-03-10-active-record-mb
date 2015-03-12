@@ -15,6 +15,5 @@ div class="css_table"
       tr
         td
           a href="/thread/#{x['id']}" #{x['title']}
-        - user = User.find(x['user_id'])
         td
-          a href="/user/#{user.id}" #{user.username}
+          a href="/user/#{x.user_id}" #{x.username}

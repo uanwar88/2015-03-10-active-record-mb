@@ -1,6 +1,7 @@
 get '/board/:id' do
   @board_id = params[:id]
-  @threads = MbThread.where("board_id = ?", "#{@board_id}")
+  @threads = MbThread.joins(:user).where(board_id: @board_id).select("mb_threads.id, mb_threads.title, mb_threads.user_id, mb_threads.board_id,
+   users.username AS username")
   slim :"threads/show_threads"
 end
 

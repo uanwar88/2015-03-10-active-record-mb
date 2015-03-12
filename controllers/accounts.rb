@@ -8,16 +8,21 @@ get '/logout' do
 end
 
 post '/login' do
-  user = User.where("username = ?", params['username'])
-  if user.empty?
-    @message = "Username not found! Please enter a valid username or make a new user."
-    slim :"misc/error"
-  else
-    session[:user] = user[0]
-    if session[:user].username[0,5] == "admin"
-      session[:admin] = 1
+  user = User.where(username: params['username'])[0]
+  if user
+    if BCrypt::Password.new(user.password) == params["password"]
+      session[:user] = user
+      if session[:user].username[0,5] == "admin"
+        session[:admin] = 1
+      end
+      redirect to ('/')
+    else
+      @message = "Incorrect username or password!"
+      slim :"misc/error"
     end
-    redirect to ('/')
+  else
+    @message = "Incorrect username or password!"
+    slim :"misc/error"
   end
 end
 
@@ -26,7 +31,7 @@ get '/new_account' do
 end
 
 post '/new_account' do
-  user = User.create(username: params['username'].downcase, password: Bcrypt::Password.create(params["password"]))
+  user = User.create(username: params['username'].downcase, password: BCrypt::Password.create(params["password"]))
   session[:user] = user
   if session[:user].username[0,5] == "admin"
     session[:admin] = 1
