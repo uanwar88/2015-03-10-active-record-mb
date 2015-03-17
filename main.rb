@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'bundler/setup'
+
+
 require 'pry'
 require 'sqlite3'
 require 'slim'

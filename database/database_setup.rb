@@ -1,4 +1,4 @@
-DATABASE = SQLite3::Database.new("/Users/usman/Code/2015-03-10-active-record-mb/database/main.db")
+DATABASE = SQLite3::Database.new("/Users/usman/Code/2015-03/2015-03-10-active-record-mb/database/main.db")
 
 DATABASE.results_as_hash = true
 
@@ -16,4 +16,4 @@ DATABASE.execute("CREATE TABLE IF NOT EXISTS mb_threads (id INTEGER PRIMARY KEY,
                               FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
                               FOREIGN KEY(board_id) REFERENCES boards(id) ON DELETE CASCADE)")
 
-set :database, {adapter: "sqlite3", database: "/Users/usman/Code/2015-03-10-active-record-mb/database/main.db"}
+set :database, {adapter: "sqlite3", database: "/Users/usman/Code/2015-03/2015-03-10-active-record-mb/database/main.db"}
